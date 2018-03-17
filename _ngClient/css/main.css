@@ -1,0 +1,106 @@
+ 
+html {
+ overflow-y: scroll; /* prevents a scrolling jump */
+}
+ 
+/* prevent header covering body */
+body { 
+    padding-top: 65px; 
+}
+ 
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+} 
+ 
+.oneSubject {    border: 3px solid #ffffff;  }  
+ 
+.oneSubject:hover {  color:blue;
+					 background-color : yellow;
+					 border: 3px solid #d0d0d0;
+				  } 
+ 
+ 
+.aHeader:hover  {background: cyan;} 
+ 
+.assessment:nth-child(even)  {background: #e0e0e0; border: 3px solid #e0e0e0;}  
+.assessment:nth-child(odd)   {background: #f1f1f1; border: 3px solid #f1f1f1;}	 
+
+.assessment:nth-child(even):hover  {background: cyan; border: 3px solid #e0e0e0;}  
+.assessment:nth-child(odd):hover   {background: cyan; border: 3px solid #f1f1f1;}	
+
+
+.colA { background: #FFF6A2; } 
+.colB { background: magenta; }
+.colC { background: cyan; }
+.colD { background: lightblue; }
+
+div.colA,  div.colC, div.colD { font-size:3em;}  /* no rule for colB */
+
+
+div.colA:hover,  div.colB:hover ,div.colC:hover, div.colD:hover { background : red;}   
+
+
+ 
+ 
+/* bootstrap-notify */
+ 
+ /* Start - bootstrap-notify.css */
+.notifications {
+  position: fixed;
+  z-index: 9999;
+}
+
+/* Positioning */ 
+.notifications.top-right {
+  right: 10px;
+  top: 25px;
+}
+
+.notifications.top-left {
+  left: 10px;
+  top: 25px;
+}
+
+.notifications.bottom-left {
+  left: 10px;
+  bottom: 25px;
+}
+
+.notifications.bottom-right {
+  right: 10px;
+  bottom: 25px;
+}
+
+/* Notification Element */
+.notifications > div {
+  position: relative;
+  margin: 5px 0;
+}
+/* End - bootstrap-notify.css */
+.nrz-layer {
+    padding: 15px 15px 15px;
+}
+
+/* bootstrap-notify.css */
+.notifications {
+    filter: alpha(opacity=0.95);
+    opacity: 0.95;
+}
+
+.notifications > div > span {
+    margin-right: 15px;
+}
+
+.notifications > div > a.close {
+    margin-top: -2px;
+}
+
+.navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>li:hover {
+    border-radius: 14px;
+    background-color: #ff0;
+    color: green;
+}

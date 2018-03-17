@@ -1,0 +1,128 @@
+Note: In a secure API this route/resources would be protected to only authenticated users.<br>
+This UI would have issues and would need fixing before release.<br>
+ 
+NEED to detect renaming of assessment, would not really do this here, do it in a separate form to minimise that problem, it causes problems
+ 
+
+<form name="outerForm"> 
+ <div  class="container-fluid  oneSubject"   ng-repeat="x in data" >
+  
+ 
+    <h3>{{$index+1}}) {{x.subject}}</h3>
+
+	
+ 
+<div class="row  col-md-offset-3">
+ 
+<div class="col-md-12">
+
+<h4>Name + Weights Per Assessment</h4>
+</div>
+<!-- dynamically setting the name attribute using the $index  to allow for multiple forms-->
+<!-- using ng-form   -->
+ <!--
+ [{{getForm($index+1)}}]
+ -->
+ 
+
+
+<ng-form name="form_{{$index+1}}" > <!-- localised nested ng-form name -->
+
+<div class="row"  >
+	<div class="col-md-3" >
+      Name
+	</div>		
+	
+	<div class="col-md-3 ">
+		Integer Weight Out of 100
+	</div>			
+</div>	
+
+<div class="row aHeader" ng-repeat="A in x.assessment_details.list">
+	<div class="col-md-3" >
+        <div class="form-group" ng-class="{ 'has-error': form_{{$index+1}}.aName.$dirty && form_{{$index+1}}.aName.$error.required }">
+            <label for="aName"></label>
+            <input type="text" name="aName" id="aName" class="form-control" ng-model="A.aName" required />
+            <span ng-show="form_{{$index+1}}.aName.$dirty && form_{{$index+1}}.aName.$error.required" class="help-block">Name is required</span>
+        </div>
+	</div>		
+	
+	<div class="col-md-2 ">
+        <div class="form-group" ng-class="{ 'has-error': form_{{$index+1}}.aWeight.$dirty && form_{{$index+1}}.aWeight.$error.required }">
+            <label for="aWeight"></label>
+		 
+            <input   type="number" name="aWeight" id="aWeight" class="form-control" ng-model="A.aWeight" required  style="width:50%"/>
+		 
+            <span ng-show="form_{{$index+1}}.aWeight.$dirty && form_{{$index+1}}.aWeight.$error.required" class="help-block">Weight is required</span>
+        </div>
+  	
+	</div>		
+	
+	<div class="col-md-2">
+	    <br>
+        <button class="btn btn-xs btn-primary " ng-click="applyPerStudent($parent.$index,A.aName,A.aWeight)" ng-disabled="!A.aName.length > 0">Apply</button>
+	</div>		
+</div>	
+
+
+<div class="row">
+	<div class="col-md-2 col-md-offset-7">
+        <button class="btn btn-xs btn-primary" ng-click="addAssessment(x.assessment_details.list)">New Assessment</button>
+	</div>	
+<div class="row">
+	<div class="col-md-2">
+	        <div class="form-actions">
+            <button type="submit" ng-click="recalculateSubjectAll($index)" class="btn btn-xs btn-primary">Recalculate All</button>        
+        </div>
+	</div>				
+</div>		
+</div>	
+ 
+
+</ng-form>
+ 
+</div>
+	
+	 <div  class="container-fluid"   ng-repeat="y in x.students" >
+		<h4>{{$parent.$index+1}}.{{$index+1}}) {{y.name}}</h4>	
+		
+		 <div  class="row assessment"   ng-repeat="z in y.assessments" >
+		    <div class="col-md-3">
+				{{$parent.$parent.$index+1}}.{{$parent.$index+1}}.{{$index+1}}) 
+			</div>
+		    <div class="col-md-2">
+			{{z.type}}
+			</div>		
+		    <div class="col-md-1">
+			   <span class="pull-right">{{z.weight |  percentage:2 }}<span>
+			</div>				
+		    <div class="col-md-2">
+			
+	<input type="number" style="width:50%" name="mark" placeholder="Mark" ng-model="z.mark" ng-pattern="/^(\d{1,2}|100)?/" step="1" ng-min="0" ng-max="100" />		
+			   
+			</div>			
+			
+		    <div class="col-md-1">
+			   <span class="pull-right">{{z.contribute | number : 2}}<span>
+			</div>			
+		    <div class="col-md-3">
+				<input type="text"  style="width:100%" name="mark"  ng-model="z.comment"  min="1" max="128" />		
+			</div>			 		 		
+		 </div>	
+		 
+		 <div class="row"> 
+		  
+			<div class="col-md-9"> 
+			 <span  class="pull-right"  style="font-size:1.25em;"  >			   
+				Overall = {{y.weightedAverage  | number : 2}}		 		   
+			 </span>
+			</div>	
+		 </div>	
+	 </div>	
+ </div>
+ <form>
+ 
+  
+  
+  
+	 
