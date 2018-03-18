@@ -1,5 +1,5 @@
 
-<div  class="fixedContainer" > 
+<div  class="fixedContainer" >  <!-- second level fixed bar below navBar -->
 	<div class="col-md-2" >
       Name: {{outerForm.$name}}
 	</div>		
@@ -42,28 +42,7 @@ NEED to detect renaming of assessment, would not really do this here, do it in a
  
 <br> 
  
-<div class=" fState"  id="fixedContainer2">
-	<div class="col-md-2" >
-      Name: {{outerForm.$name}}
-	</div>		
-	<div class="col-md-2" >
-      Dirty: {{outerForm.$dirty}}
-	</div>	
-	<div class="col-md-2" >
-      Pristine: {{outerForm.$pristine}}
-	</div>	 	
-	<div class="col-md-2" >
-      Valid: {{outerForm.$valid}}
-	</div>	
-	<div class="col-md-2" >
-      Invalid: {{outerForm.$invalid}}
-	</div>	 
-	<div class="col-md-2" >
-      Submitted: {{outerForm.$submitted}}
-	</div>		
-</div> 
- 
- 
+
  
 <form name="outerForm"> 
  <div  class="container-fluid  oneSubject"   ng-repeat="x in data" > <!-- One Subject -->
