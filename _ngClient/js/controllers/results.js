@@ -1,7 +1,9 @@
  
 angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels', 
 	function($scope, jsonModels  ) {
-			
+		
+		$scope.formMeta = {};
+		$scope.formMeta.showMetaData = false;	
  		$scope.data = jsonModels.get(1); // store an array of different subject results => later from the cloud via service => ajax	
 		
 		// // some of the code here should really be in the service that stores the data => EXERCISE
@@ -10,9 +12,19 @@ angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels',
 			return $scope.outerForm['form_'+index];
 		}
 		
-	$scope.addAssessment = function(list) { // add a new assessent header, that will need values inputed by user
-	   list.push({"aName" : "", "aWeight" : 0, "date" :""});
-	}	
+	$scope.addAssessment = function(n,list) { // add a new assessent header, that will need values inputed by user
+	   list.push({"aName" : null, "aWeight" : 0, "date" :""});
+	  // $scope.outerForm['form_'+index].$dirty =  true
+	  $scope.outerForm['form_' + n].$dirty =  true;
+	  $scope.outerForm['form_' + n].$pristine =  false;
+	  
+	  $scope.outerForm['form_' + n]['aName' + list.length-1] = {}; // this object does not exist on the view yet
+	  $scope.outerForm['form_' + n]['aName' + list.length-1].$dirty = true;
+	  
+  
+	  
+	   //form_{{$parent.$index+1}}.aName{{$index}}.$dirty = true;
+	}	 
 	
 	$scope.applyPerStudent = function (index,	aName, aWeight) { // ensure each student has a slot for this assessment
 	

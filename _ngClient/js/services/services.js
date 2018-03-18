@@ -121,7 +121,7 @@ angularnodeApp.service('jsonModels', [function () {
             },
             {
               "type": "ass2",
-              "mark": null,
+              "mark": 0,
               "comment": "missing"
             } 
           ]
@@ -143,6 +143,7 @@ angularnodeApp.service('jsonModels', [function () {
     }	
   ]	
 	,
+	// model 2 data,
  [
  	 { "name": "Omega, Beta", 
 	   "subjects" :

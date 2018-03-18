@@ -7,19 +7,51 @@ html {
 body { 
     padding-top: 65px; 
 }
- 
-.vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
 
-  display: flex;
-  align-items: center;
-} 
+
+.fixedContainer /* across the top, and below the nav bar, view specific content*/
+{
+ 
+  background-color:#ddd;
+  z-index : 9999;
+  position: fixed;
+  width: 84%;
+  right:0;
+  left:0;
+  height: 25px;
+  margin:auto;
+ 
+  top: 51px; /* there is another header of 65 */
+ /* margin-left: -100px; /*half the width*/
+}
+
+.viewContent { /* below navbar + fixed fixedContainer */
+ position: relative;
+ top: 15px;
+}
+
+.weightsHeader:hover { background:#a6ff4d;}
+
+.student:hover { background:#a6ff4d; }
+
+.indicate {background:yellow; color:red;}
+.indicateRed {background:red; }
+
+input.ng-invalid.ng-dirty {
+    border: 1px solid red;
+}
+
+.has-error {  background-color : red;} 
+
+div.fState {  background-color : orange;}
+
+
+
  
 .oneSubject {    border: 3px solid #ffffff;  }  
  
 .oneSubject:hover {  color:blue;
-					 background-color : yellow;
+					 background-color : #ffffcc;
 					 border: 3px solid #d0d0d0;
 				  } 
  

@@ -30,6 +30,6 @@ console.log("angularnodeApp.config")	  // runs once only
 						controller: 'RegisterCtrl'
 					  }).						  
 					  otherwise({
-						redirectTo: '/login'
+						redirectTo: '/results'
 					  });
   }]);

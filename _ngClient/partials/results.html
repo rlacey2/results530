@@ -1,61 +1,147 @@
+
+<div  class="fixedContainer" > 
+	<div class="col-md-2" >
+      Name: {{outerForm.$name}}
+	</div>		
+	<div class="col-md-1"  ng-class="{indicate : outerForm.$dirty}" >
+      Dirty: {{outerForm.$dirty}}
+	</div>	
+	<div class="col-md-1" >
+      Pristine: {{outerForm.$pristine}}
+	</div>	 	
+	<div class="col-md-1" >
+      Valid: {{outerForm.$valid}}
+	</div>	
+	<div class="col-md-1" ng-class="{indicate : outerForm.$invalid}" >
+      Invalid: {{outerForm.$invalid}}
+	</div>	 
+	<div class="col-md-2" >
+      Submitted: {{outerForm.$submitted}}
+	</div>	
+	<div class="col-md-2" >
+  <label>Show Angular Meta Data:
+    <input type="checkbox" ng-model="formMeta.showMetaData"  >
+   </label> 
+	</div>	
+</div> 
+
+
+<div class="viewContent">
+
+<span ng-if="formMeta.showMetaData" style="color:red;font-weight:800">			
+Meta Data: advanced - some of the behind the scenes magic that Angular uses to track inputs and forms for validation states/rules.<br>
+ </span>
+<span ng-if="!formMeta.showMetaData" style="color:red;font-weight:800">			
+<br> <!-- prevent a view jump, at least here -->
+ </span>
+ 
 Note: In a secure API this route/resources would be protected to only authenticated users.<br>
 This UI would have issues and would need fixing before release.<br>
  
 NEED to detect renaming of assessment, would not really do this here, do it in a separate form to minimise that problem, it causes problems
  
-
+<br> 
+ 
+<div class=" fState"  id="fixedContainer2">
+	<div class="col-md-2" >
+      Name: {{outerForm.$name}}
+	</div>		
+	<div class="col-md-2" >
+      Dirty: {{outerForm.$dirty}}
+	</div>	
+	<div class="col-md-2" >
+      Pristine: {{outerForm.$pristine}}
+	</div>	 	
+	<div class="col-md-2" >
+      Valid: {{outerForm.$valid}}
+	</div>	
+	<div class="col-md-2" >
+      Invalid: {{outerForm.$invalid}}
+	</div>	 
+	<div class="col-md-2" >
+      Submitted: {{outerForm.$submitted}}
+	</div>		
+</div> 
+ 
+ 
+ 
 <form name="outerForm"> 
- <div  class="container-fluid  oneSubject"   ng-repeat="x in data" >
-  
+ <div  class="container-fluid  oneSubject"   ng-repeat="x in data" > <!-- One Subject -->
  
     <h3>{{$index+1}}) {{x.subject}}</h3>
 
-	
+<div class="row fState" ng-if="formMeta.showMetaData" >
+	<div class="col-md-2" >
+      Name: {{outerForm['subjHeader_'+($index+1)].$name}}
+	</div>		
+	<div class="col-md-2" >
+      Dirty: {{outerForm['subjHeader_'+($index+1)].$dirty}}
+	</div>	
+	<div class="col-md-2" >
+      Pristine: {{outerForm['subjHeader_'+($index+1)].$pristine}}
+	</div>	 	
+	<div class="col-md-2" >
+      Valid: {{outerForm['subjHeader_'+($index+1)].$valid}}
+	</div>	
+	<div class="col-md-2" >
+      Invalid: {{outerForm['subjHeader_'+($index+1)].$invalid}}
+	</div>	 
+	<div class="col-md-2" >
+      Submitted: {{outerForm['subjHeader_'+($index+1)].$submitted}}
+	</div>		
+</div>		
+<div class="row">
+<div class="col-md-6  col-md-offset-3 weightsHeader"> <!-- section A: for assessment weights in header -->
  
-<div class="row  col-md-offset-3">
- 
-<div class="col-md-12">
+		<div class="col-md-12">
 
-<h4>Name + Weights Per Assessment</h4>
-</div>
+		<h4>Name + Weights Per Assessment</h4>
+		</div>
 <!-- dynamically setting the name attribute using the $index  to allow for multiple forms-->
 <!-- using ng-form   -->
  <!--
  [{{getForm($index+1)}}]
- -->
- 
+   -->
+<span ng-if="formMeta.showMetaData && false">		
+{{outerForm['subjHeader_'+ ($index+1)]}}
+ </span>   
+  
+<!--
+NB CONTEXT OF REFERENCE TO $index is important in the html due to a number of nested ng-repeat(s)
+--> 
+  
+<ng-form name="subjHeader_{{$index+1}}" > <!-- localised nested ng-form name for one SUBJBECT-->
 
 
-<ng-form name="form_{{$index+1}}" > <!-- localised nested ng-form name -->
+
 
 <div class="row"  >
 	<div class="col-md-3" >
       Name
 	</div>		
 	
-	<div class="col-md-3 ">
+	<div class="col-md-5 ">
 		Integer Weight Out of 100
 	</div>			
 </div>	
 
 <div class="row aHeader" ng-repeat="A in x.assessment_details.list">
 	<div class="col-md-3" >
-        <div class="form-group" ng-class="{ 'has-error': form_{{$index+1}}.aName.$dirty && form_{{$index+1}}.aName.$error.required }">
-            <label for="aName"></label>
-            <input type="text" name="aName" id="aName" class="form-control" ng-model="A.aName" required />
-            <span ng-show="form_{{$index+1}}.aName.$dirty && form_{{$index+1}}.aName.$error.required" class="help-block">Name is required</span>
+        <div class="form-group" ng-class="{ 'has-error': subjHeader_{{$parent.$index+1}}.aName{{$index}}.$dirty && subjHeader_{{$parent.$index+1}}.aName{{$index}}.$error.required }">
+            <label for="aName{{$index}}"></label>
+            <input type="text" name="aName{{$index}}" id="aName{{$index}}" class="form-control" ng-model="A.aName" required ng-class="{'ng-dirty' : !A.aName}"/>
+            <span ng-show="subjHeader_{{$parent.$index+1}}.aName{{$index}}.$dirty && subjHeader_{{$parent.$index+1}}.aName{{$index}}.$error.required" class="help-block">Name is required</span>
         </div>
 	</div>		
 	
-	<div class="col-md-2 ">
-        <div class="form-group" ng-class="{ 'has-error': form_{{$index+1}}.aWeight.$dirty && form_{{$index+1}}.aWeight.$error.required }">
-            <label for="aWeight"></label>
+	<div class="col-md-4 ">
+        <div class="form-group" ng-class="{ 'has-error': subjHeader_{{$parent.$index+1}}.aWeight{{$index}}.$dirty && subjHeader_{{$parent.$index+1}}.aWeight{{$index}}.$error.required }">
+            <label for="aWeight{{$index}}"></label>
 		 
-            <input   type="number" name="aWeight" id="aWeight" class="form-control" ng-model="A.aWeight" required  style="width:50%"/>
+            <input   type="number" name="aWeight{{$index}}" id="aWeight{{$index}}" class="form-control" ng-model="A.aWeight" required  style="width:50%"/>
 		 
-            <span ng-show="form_{{$index+1}}.aWeight.$dirty && form_{{$index+1}}.aWeight.$error.required" class="help-block">Weight is required</span>
-        </div>
-  	
+            <span ng-show="subjHeader_{{$parent.$index+1}}.aWeight{{$index}}.$dirty && subjHeader_{{$parent.$index+1}}.aName{{$index}}.$error.required" class="help-block">Weight is required</span>
+          </div>
 	</div>		
 	
 	<div class="col-md-2">
@@ -65,28 +151,61 @@ NEED to detect renaming of assessment, would not really do this here, do it in a
 </div>	
 
 
-<div class="row">
-	<div class="col-md-2 col-md-offset-7">
-        <button class="btn btn-xs btn-primary" ng-click="addAssessment(x.assessment_details.list)">New Assessment</button>
-	</div>	
-<div class="row">
-	<div class="col-md-2">
-	        <div class="form-actions">
-            <button type="submit" ng-click="recalculateSubjectAll($index)" class="btn btn-xs btn-primary">Recalculate All</button>        
-        </div>
-	</div>				
-</div>		
+ 
+	<div class="row">
+		<div class="col-md-2">
+			<button class="btn btn-xs btn-primary" ng-click="addAssessment($index+1, x.assessment_details.list)">New Assessment</button>
+		</div>
+		<div class="col-md-4">
+ 		</div>	 
+	 
+		<div class="col-md-2">
+				<div class="form-actions">
+				<button type="submit" ng-click="recalculateSubjectAll($index)" class="btn btn-xs btn-primary">Recalculate All</button>        
+			</div>
+		</div>				
+	 
 </div>	
  
 
 </ng-form>
- 
+ </div>
 </div>
+
+<ng-form name="subjStudents_{{$index+1}}" > <!-- localised nested ng-form name -->	
+
+ 
+<div class="row fState" ng-if="formMeta.showMetaData" >
+	<div class="col-md-2" >
+      Name: {{outerForm['subjStudents_'+($index+1) ].$name}}
+	</div>		
+	<div class="col-md-2" >
+      Dirty: {{outerForm['subjStudents_'+($index+1) ].$dirty}}
+	</div>	
+	<div class="col-md-2" >
+      Pristine: {{outerForm['subjStudents_'+($index+1) ].$pristine}}
+	</div>	 	
+	<div class="col-md-2" >
+      Valid: {{outerForm['subjStudents_'+($index+1) ].$valid}}
+	</div>	
+	<div class="col-md-2" >
+      Invalid: {{outerForm['subjStudents_'+($index+1) ].$invalid}}
+	</div>	 
+	<div class="col-md-2" >
+      Submitted: {{outerForm['subjStudents_'+($index+1) ].$submitted}}
+	</div>		
+</div>	
+ 
+<span ng-if="formMeta.showMetaData && false">			
+<br>[subjStudents_{{$index+1}}]<br>
+{{outerForm['subjStudents_'+ ($index+1) ]}}
+ </span>
 	
-	 <div  class="container-fluid"   ng-repeat="y in x.students" >
+ 
+	 <div  class="container-fluid student"   ng-repeat="y in x.students" > <!-- section B: Per Student -->
 		<h4>{{$parent.$index+1}}.{{$index+1}}) {{y.name}}</h4>	
 		
-		 <div  class="row assessment"   ng-repeat="z in y.assessments" >
+		 <div  class="row assessment"   ng-repeat="z in y.assessments" > <!-- section C: Per Assessment -->
 		    <div class="col-md-3">
 				{{$parent.$parent.$index+1}}.{{$parent.$index+1}}.{{$index+1}}) 
 			</div>
@@ -96,9 +215,20 @@ NEED to detect renaming of assessment, would not really do this here, do it in a
 		    <div class="col-md-1">
 			   <span class="pull-right">{{z.weight |  percentage:2 }}<span>
 			</div>				
-		    <div class="col-md-2">
+		    <div class="col-md-2"
 			
-	<input type="number" style="width:50%" name="mark" placeholder="Mark" ng-model="z.mark" ng-pattern="/^(\d{1,2}|100)?/" step="1" ng-min="0" ng-max="100" />		
+			ng-class="{indicateRed : outerForm['subjStudents_'+ ($parent.$parent.$index+1) ]['mark'+ ($parent.$parent.$index+1) + '' + ($parent.$index+1)+ '' +($index+1)].$invalid }">
+
+ 
+			
+<span ng-if="formMeta.showMetaData && false">			
+	mark{{$parent.$parent.$index+1}}{{$parent.$index+1}}{{$index+1}} <br>
+
+	{{outerForm['subjHeader_'+ ($parent.$parent.$index+1) ]['mark'+ ($parent.$parent.$index+1) + '' + ($parent.$index+1)+ '' +($index+1)]}}
+ </span>
+
+	<input type="number" style="width:50%"  id="mark{{$parent.$parent.$index+1}}{{$parent.$index+1}}{{$index+1}}" name="mark{{$parent.$parent.$index+1}}{{$parent.$index+1}}{{$index+1}}" placeholder="Mark" ng-model="z.mark" ng-pattern="/^(\d{1,2}|100)?/" step="1" ng-min="0" ng-max="100" required
+	    ng-class="{ 'has-error': outerForm['subjHeader_'+ ($parent.$parent.$index+1) ]['mark'+ ($parent.$parent.$index+1) + '' + ($parent.$index+1)+ '' +($index+1)].$dirty && outerForm['subjHeader_'+ ($parent.$parent.$index+1) ]['mark'+ ($parent.$parent.$index+1) + '' + ($parent.$index+1)+ '' +($index+1)].$error.required }">
 			   
 			</div>			
 			
@@ -119,10 +249,13 @@ NEED to detect renaming of assessment, would not really do this here, do it in a
 			</div>	
 		 </div>	
 	 </div>	
+	 
+</ng-form>	 
+	 
  </div>
  <form>
  
-  
+ </div>  
   
   
 	 
