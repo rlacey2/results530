@@ -1,6 +1,13 @@
  
 angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels', 
-	function($scope, jsonModels  ) {
+
+// Navigating down through a nested structure of objects and arrays can be confusing to the human reader.
+// Therefore, allocating a nested structure to a smaller variable for subequent references over the following
+// lines of code can make the code a bit neater.
+// applyPerStudent below demonstrates this with S (Students) and A (Assessments)
+
+
+	function($scope, jsonModels  ) {  // jsonModels supplies the data for the view and is hard-coded in the service
 		
 		$scope.formMeta = {};
 		$scope.formMeta.showMetaData = false;	
@@ -12,25 +19,19 @@ angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels',
 			return $scope.outerForm['form_'+index];
 		}
 		
-	$scope.addAssessment = function(n,list) { // add a new assessent header, that will need values inputed by user
-	   list.push({"aName" : null, "aWeight" : 0, "date" :""});
-	  // $scope.outerForm['form_'+index].$dirty =  true
-	  $scope.outerForm['form_' + n].$dirty =  true;
-	  $scope.outerForm['form_' + n].$pristine =  false;
-	  
-	  $scope.outerForm['form_' + n]['aName' + list.length-1] = {}; // this object does not exist on the view yet
-	  $scope.outerForm['form_' + n]['aName' + list.length-1].$dirty = true;
-	  
-  
-	  
-	   //form_{{$parent.$index+1}}.aName{{$index}}.$dirty = true;
+	$scope.addAssessment = function(n,list) { // add a new assessment header, that will need values inputed by user and per student
+		list.push({"aName" : null, "aWeight" : 0, "date" :""});
+		$scope.outerForm['form_' + n].$dirty =  true;
+		$scope.outerForm['form_' + n].$pristine =  false;  
+		$scope.outerForm['form_' + n]['aName' + list.length-1] = {}; // this object does not exist on the view yet, so create in empty
+		$scope.outerForm['form_' + n]['aName' + list.length-1].$dirty = true;
 	}	 
 	
 	$scope.applyPerStudent = function (index,	aName, aWeight) { // ensure each student has a slot for this assessment
 	
-        aWeight = parseInt(aWeight);
+        aWeight = parseInt(aWeight); // ensure the number is an integer in case comes in as a string
 		
-		// Make accessing some objects easier by using an alias variable
+		// Make accessing some objects easier by using an alias variable to shorten the navigation path
 		var S = $scope.data[index].students;
 		var sN = S.length;   // total number of students
 		var A = $scope.data[index].assessment_details.list;
@@ -74,11 +75,11 @@ angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels',
 				});
 			S[i].weightedAverage = studentResult;	 // store the overall student result	
 		} // for each student	
-	}
+	} // applyPerStudent
 		
 	$scope.recalculateSubjectAll = function(index) {  // update all the results across all assessments for one subject  
- 		// Make accessing some objects easier by using an alias variable
-		var A = $scope.data[index].assessment_details.list;
+ 		
+		var A = $scope.data[index].assessment_details.list; // Make accessing some objects easier by using an alias variable
 		var aN = A.length;  // number of assessments each student should have	
  	
 		A.map(function(itm){ // iterate over each assessment to update all the students for that assessment
@@ -86,11 +87,11 @@ angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels',
 				$scope.applyPerStudent(index,itm.aName,itm.aWeight);
 			}
 		});	
-	}
+	} // recalculateSubjectAll
  
 	}]); // ResultsCtrl
 	
- angularnodeApp.filter('percentage', ['$filter', function ($filter) {
+ angularnodeApp.filter('percentage', ['$filter', function ($filter) { // used to format the view percentage
   return function (input, decimals) {
     return $filter('number')(input * 1, decimals) + '%';
   };
@@ -98,4 +99,8 @@ angularnodeApp.controller('ResultsCtrl', ['$scope' ,  'jsonModels',
 	
  
  	
+
+	 
+	 
+	 
 	 
