@@ -30,11 +30,12 @@ body {
 .viewContent { /* below navbar + fixed fixedContainer */
  position: relative;
  top: 15px;
+
 }
 
-.weightsHeader:hover { background:#a6ff4d; border-radius: 20px;}
+.weightsHeader:hover { background:#a6ff4d; border-radius: 20px; transition-duration: 1.5s;  } 
 
-.student:hover { background:#a6ff4d; 
+.student:hover { background:#a6ff4d;    transition-duration: 1.5s;
 					border-radius: 20px;
 				}
 
@@ -50,21 +51,21 @@ input.ng-invalid.ng-dirty {
 div.fState {  background-color : orange;}
 
  
-.oneSubject {    border: 3px solid #ffffff;  }  
+.oneSubject {    border: 3px solid #ffffff;    }  
  
-.oneSubject:hover {  color:blue;
+.oneSubject:hover {  color:blue; transition-duration: 1.5s;
 					 background-color : #ffffcc;
 					 border: 3px solid #d0d0d0;
 				  } 
  
  
-.aHeader:hover  {background: cyan; border-radius: 20px;} 
+.aHeader:hover  {background: cyan; border-radius: 20px; transition-duration: 1.5s;} 
  
-.assessment:nth-child(even)  {background: #e0e0e0; border: 3px solid #e0e0e0;}  
+.assessment:nth-child(even)  {background: #e0e0e0; border: 3px solid #e0e0e0; }  
 .assessment:nth-child(odd)   {background: #f1f1f1; border: 3px solid #f1f1f1;}	 
 
-.assessment:nth-child(even):hover  {background: cyan; border: 3px solid #e0e0e0;  border-radius: 20px;}  
-.assessment:nth-child(odd):hover   {background: cyan; border: 3px solid #f1f1f1;  border-radius: 20px;}	
+.assessment:nth-child(even):hover  {background: cyan; border: 3px solid #e0e0e0;  border-radius: 20px; transition-duration: 1.5s;}  
+.assessment:nth-child(odd):hover   {background: cyan; border: 3px solid #f1f1f1;  border-radius: 20px; transition-duration: 1.5s;}	
 
 
 .colA { background: #FFF6A2; } 
